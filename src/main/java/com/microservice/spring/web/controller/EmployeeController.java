@@ -3,6 +3,7 @@ package com.microservice.spring.web.controller;
 import com.microservice.spring.web.domain.Employee;
 import com.microservice.spring.web.exception.EmployeeNotFoundException;
 import com.microservice.spring.web.repository.EmployeeRepository;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +24,9 @@ public class EmployeeController {
 
     @GetMapping("/employees/{id}")
     public Employee getEmployee(@PathVariable Long id) {
-        return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+        Employee employee =  employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+
+        return employee;
     }
 
     @PostMapping("/employees")
