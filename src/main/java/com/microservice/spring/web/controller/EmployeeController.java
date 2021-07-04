@@ -4,6 +4,7 @@ import com.microservice.spring.web.domain.Employee;
 import com.microservice.spring.web.exception.EmployeeNotFoundException;
 import com.microservice.spring.web.repository.EmployeeRepository;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,7 +49,9 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/employees/{id}")
-    public void deleteEmployee(@PathVariable Long id) {
+    public ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
         employeeRepository.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
