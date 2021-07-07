@@ -16,7 +16,7 @@ public class EmployeeController {
 
     private final EmployeeRepository employeeRepository;
 
-    @Value("${test.name}")
+    @Value("${test.name:defaultValue}") // inject test.name property from application.properties file
     private String name;
 
     @Autowired
@@ -34,6 +34,11 @@ public class EmployeeController {
     @GetMapping(value = "/env")
     public String getMsgUsingEnvironment() {
         return environment.getProperty("test.env");
+    }
+
+    @GetMapping(value = "/location")
+    public String getLocation() {
+        return environment.getProperty("location");
     }
 
     @GetMapping("/employees")
