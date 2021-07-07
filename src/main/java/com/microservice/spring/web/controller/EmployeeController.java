@@ -3,7 +3,9 @@ package com.microservice.spring.web.controller;
 import com.microservice.spring.web.domain.Employee;
 import com.microservice.spring.web.exception.EmployeeNotFoundException;
 import com.microservice.spring.web.repository.EmployeeRepository;
-import org.springframework.hateoas.EntityModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +16,24 @@ public class EmployeeController {
 
     private final EmployeeRepository employeeRepository;
 
+    @Value("${test.name}")
+    private String name;
+
+    @Autowired
+    private Environment environment;
+
     public EmployeeController(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
+    }
+
+    @GetMapping(value = "/val")
+    public String getMsgUsingValue() {
+        return name;
+    }
+
+    @GetMapping(value = "/env")
+    public String getMsgUsingEnvironment() {
+        return environment.getProperty("test.env");
     }
 
     @GetMapping("/employees")
